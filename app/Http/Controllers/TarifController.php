@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Record;
 use Illuminate\Http\Request;
 use App\Models\Tarif;
-use Illuminate\Support\Facades\Log;
 
 
 class TarifController extends Controller
@@ -19,7 +18,6 @@ class TarifController extends Controller
 
     public function store(Request $request)
     {
-        Log::info('Данные из запроса:', $request->all());
         $data = $request->all();
         $errors = [];
         foreach ($data["values"] as $value) {
@@ -39,12 +37,12 @@ class TarifController extends Controller
     }
         if (count($errors) == 0) {
             foreach ($data["tarifs"] as $index => $tarif) {
-                $record = new Record();
-                $record->fill([
+                $record = Record::query()->create([
                     'tarif_id' => intval($tarif),
                     'price' => floatval($data['prices'][$index]),
-                    'unit_point' => floatval($data['values'][$index]),
+                    'unit_points' => floatval($data['values'][$index]),
                 ]);
+                $record->save();
             }
             $errors[] = "Данные отправленно успешно";
         }

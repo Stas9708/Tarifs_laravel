@@ -13,7 +13,8 @@
 <body>
 <div class="mt-4 ms-0">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url('/') }}">Tarifs</a>
+        <a class="navbar-brand" href="{{route('tarifs.index')}}">Tarifs</a>
+        <a class="navbar-brand" href="{{route('chart')}}">Chart</a>
     </nav>
 
     <div class="main_block">

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->integer('tarif_id');
+            $table->bigInteger('tarif_id');
             $table->float('price');
             $table->float('unit_points');
         });
