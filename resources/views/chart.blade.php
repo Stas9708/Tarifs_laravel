@@ -1,5 +1,10 @@
-<?php
 
+<!DOCTYPE html>
+<html lang="en">
+<div id="container">
 
-{{$chart->printScripts()}}
-{{echo $chart->render("chart")}}
+{!! $chart->printScripts() !!}
+<script>
+    {!! $chart->render("chart") !!}
+</script>
+</div>
