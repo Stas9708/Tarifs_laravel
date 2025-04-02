@@ -10,15 +10,15 @@ class ChartController extends Controller
 {
     public function __construct(private readonly ChartService $chartService)
     {
-        $this->chart = $this->chartService->generateChart([
-            'dataFromRecord' => Record::query()->select(['tarif_id', 'price', 'unit_points'])->get()->toArray(),
-            'tarifName' => Tarif::query()->pluck('name', 'id')->toArray(),
-        ]);
     }
 
     public function showChartPage()
     {
-        return view('chart', ['chart' => $this->chart]);
+        $chart = $this->chartService->generateChart([
+            'dataFromRecord' => Record::query()->select(['tarif_id', 'price', 'unit_points'])->get()->toArray(),
+            'tarifName' => Tarif::query()->pluck('name', 'id')->toArray(),
+        ]);
+        return view('chart', ['chart' => $chart]);
     }
 }
 
