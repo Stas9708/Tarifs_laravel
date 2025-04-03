@@ -31,8 +31,8 @@ class ChartService
         {
             $chart->series[$index] = [
                 'name' => $category,
-                'price' => $value['price'],
-                'unit points' => $value['unitPoints']
+                'x' => $value['price'],
+                'y' => $value['unitPoints']
             ];
             $index++;
         }

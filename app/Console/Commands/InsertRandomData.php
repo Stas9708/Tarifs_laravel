@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -27,13 +28,18 @@ class InsertRandomData extends Command
     public function handle()
     {
         $count = (int) $this->argument('count');
-
+        $startDate = new DateTime('2025-01-01');
+        $endDate  = new DateTime('now');
         for ($i = 0; $i < $count; $i++) {
-            DB::table('records')->insert([
-                'tarif_id' => rand(1, 4),
-                'price' => round(mt_rand(10, 1000), 2),
-                'unit_points' => round(mt_rand(10, 1000) , 2),
-            ]);
+            if($startDate <= $endDate){
+                DB::table('records')->insert([
+                    'tarif_id' => rand(1, 4),
+                    'price' => round(mt_rand(10, 1000), 2),
+                    'unit_points' => round(mt_rand(10, 1000) , 2),
+                    'created_at' => $startDate->format('Y-m-d'),
+                ]);
+            }
+        $startDate->modify('+1 month');
         }
 
         $this->info("Успішно вставлено {$count} записів у таблицю records.");
