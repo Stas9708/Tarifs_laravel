@@ -39,7 +39,7 @@ class TarifController extends Controller
             foreach ($data["tarifs"] as $index => $tarif) {
                 $record = Record::query()->create([
                     'tarif_id' => intval($tarif),
-                    'price' => floatval($data['prices'][$index]),
+                    'price' => round(floatval($data['prices'][$index]), 2),
                     'unit_points' => floatval($data['values'][$index]),
                 ]);
                 $record->save();

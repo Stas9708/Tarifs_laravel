@@ -17,8 +17,10 @@ class ChartController extends Controller
     {
         $chart = $this->chartService->generateChart([
             'dataFromRecord' => Record::query()
-                ->select(['tarif_id', 'price', 'unit_points'])
-                ->whereYear('created_at', Carbon::now()->year)->get()->toArray(),
+                ->select(['tarif_id', 'unit_points', 'created_at'])
+                ->orderBy('created_at')
+                ->whereYear('created_at', Carbon::now()->year)
+                ->get()->toArray(),
             'tarifName' => Tarif::query()->pluck('name', 'id')->toArray(),
         ]);
         return view('chart', ['chart' => $chart]);
