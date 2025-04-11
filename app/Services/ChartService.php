@@ -10,15 +10,9 @@ class ChartService
         $dataFromRecord = $data['dataFromRecord'];
         $tarifName = $data['tarifName'];
         $chart = new Highchart();
-        $date = [];
         $tarifs = [];;
         foreach($tarifName as $tarif){
             $tarifs[$tarif] = [];
-        }
-        for ($i = 0; $i < count($dataFromRecord); $i++) {
-            if (!in_array($dataFromRecord[$i]['created_at'], $date)) {
-                $date[] = $dataFromRecord[$i]['created_at'];
-            }
         }
         foreach ($tarifs as $key => $value) {
             for($i = 0; $i < count($dataFromRecord); $i++){
@@ -27,6 +21,7 @@ class ChartService
                         $tarifs[$key][] = [$dataFromRecord[$i]['created_at'] => $dataFromRecord[$i]['unit_points']];
                         continue;
                     } else{
+                        $tarifs[$key][] = [$dataFromRecord[$i]['created_at'] => null];
                         continue;
                     }
                 }
@@ -48,16 +43,23 @@ class ChartService
                 'text' => 'График тарифов',
                 'x' => 10
             );
-            $chart->xAxis = [
-                'categories' => $date,
-                'labels' => [
-                    'style' => [
-                        'fontSize' => '10px'
+            foreach ($tarifs as  $ind => $val) {
+                $dateArr = [];
+                for($i = 0; $i < count($val); $i++){
+                    $dateArr[] = implode('', array_keys($val[$i]));
+                }
+                $chart->xAxis = [
+                    'categories' => $dateArr,
+                    'labels' => [
+                        'style' => [
+                            'fontSize' => '10px'
+                        ],
+                        'step' => 1
                     ],
-                    'step' => 1
-                ],
-                'tickInterval' => 1
-            ];
+                    'tickInterval' => 1
+                ];
+                break;
+            }
             $chart->yAxis = array(
                 'title' => array(
                     'text' => 'Значение в единицах измерения тарифов'
@@ -84,11 +86,16 @@ class ChartService
                 'borderWidth' => 0
             );
             foreach ($tarifs as $tarifName => $tarif) {
+                $unitPointsArr = [];
+                foreach ($tarif as $key => $value) {
+                    $unitPointsArr[] = array_values($value);
+                }
                 $chart->series[] = array(
-                  'name' => $tarifName,
-                  'data' => $tarif
+                    'name' => $tarifName,
+                    'data' => $unitPointsArr
                 );
             }
+
         return $chart;
     }
 
@@ -106,12 +113,5 @@ class ChartService
             return false;
         }
         return $count;
-    }
-
-    public function getMaxLengthArr(array $data): array
-    {
-        foreach ($data as $key => $value) {
-            if
-        }
     }
 }
