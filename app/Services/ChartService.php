@@ -10,7 +10,7 @@ class ChartService
         $dataFromRecord = $data['dataFromRecord'];
         $tarifName = $data['tarifName'];
         $chart = new Highchart();
-        $tarifs = [];;
+        $tarifs = [];
         foreach($tarifName as $tarif){
             $tarifs[$tarif] = [];
         }

@@ -15,6 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{route('tarifs.index')}}">Tarifs</a>
         <a class="navbar-brand" href="{{route('chart')}}">Chart</a>
+        <a class="navbar-brand" href="{{route('table')}}">History table</a>
     </nav>
 
     <div class="main_block">
