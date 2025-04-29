@@ -2,10 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Таблица</title>
+    <title>Выбор даты</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
+<form method="POST" action="{{ route('table.store') }}" class="d-flex align-items-center gap-2">
+    @csrf
+    <label>Введите дату "с"</label><br>
+    <input type="date" id="date_from" name="date_from"  class="form-select form-select-sm w-auto">
+    <label>Введите дату "по"</label><br>
+    <input type="date" id="date_to" name="date_to"  class="form-select form-select-sm w-auto">
+    <button type="submit" class="btn btn-success btn-sm">Поиск</button>
+</form>
+
+@if($dates && $perPage)
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -17,22 +28,15 @@
     </tr>
     </thead>
     <tbody>
-    @php
-        $num = 1;
-    @endphp
     @foreach($dates as $date)
         <tr>
-            <td>{{ $num }}</td>
+            <td>{{ $date->id }}</td>
             <td>{{ $date->tarif->name }}</td>
             <td>{{ $date->price }}</td>
             <td>{{ $date->unit_points }}</td>
             <td>{{ $date->created_at }}</td>
         </tr>
-        @php
-            $num ++
-        @endphp
     @endforeach
-
     </tbody>
 </table>
 <form method="GET" action="{{ route('table.paginate') }}" class="row mb-3 align-items-center">
@@ -49,4 +53,7 @@
         </select>
     </div>
 </form>
+    {{$dates->links()}}
+@endif
 </body>
+</html>
