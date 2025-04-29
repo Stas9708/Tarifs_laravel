@@ -16,7 +16,7 @@
     <button type="submit" class="btn btn-success btn-sm">Поиск</button>
 </form>
 
-@if($dates && $perPage)
+@if(isset($dates) && isset($perPage))
 <table class="table table-bordered">
     <thead>
     <tr>
