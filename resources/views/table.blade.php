@@ -9,10 +9,12 @@
 
 <form method="POST" action="{{ route('table.store') }}" class="d-flex align-items-center gap-2">
     @csrf
-    <label>Введите дату "с"</label><br>
-    <input type="date" id="date_from" name="date_from"  class="form-select form-select-sm w-auto">
-    <label>Введите дату "по"</label><br>
-    <input type="date" id="date_to" name="date_to"  class="form-select form-select-sm w-auto">
+        <label for="date_from">Введите дату "с"</label>
+        <input type="date" id="date_from" name="date_from" class="form-select form-select-sm w-auto"
+               onchange="setMinDate()" value="{{$dateFrom ?? ""}}">
+        <label for="date_to">Введите дату "по"</label>
+        <input type="date" id="date_to" name="date_to" class="form-select form-select-sm w-auto"
+               value="{{$dateTo ?? ""}}">
     <button type="submit" class="btn btn-success btn-sm">Поиск</button>
 </form>
 
@@ -55,5 +57,12 @@
 </form>
     {{$dates->links()}}
 @endif
+<script>
+    function setMinDate() {
+        const fromDate = document.getElementById('date_from').value;
+        const toDate = document.getElementById('date_to');
+        toDate.min = fromDate;
+    }
+</script>
 </body>
 </html>
