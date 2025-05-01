@@ -7,14 +7,13 @@
 </head>
 <body>
 
-<form method="POST" action="{{ route('table.store') }}" class="d-flex align-items-center gap-2">
-    @csrf
+<form method="GET" action="{{ route('table.store') }}" class="d-flex align-items-center gap-2">
         <label for="date_from">Введите дату "с"</label>
         <input type="date" id="date_from" name="date_from" class="form-select form-select-sm w-auto"
-               onchange="setMinDate()" value="{{$dateFrom ?? ""}}">
+               onchange="setMinDate()" value="{{ request()->input('date_from', "") }}">
         <label for="date_to">Введите дату "по"</label>
         <input type="date" id="date_to" name="date_to" class="form-select form-select-sm w-auto"
-               value="{{$dateTo ?? ""}}">
+               value="{{ request()->input('date_to', "") }}">
     <button type="submit" class="btn btn-success btn-sm">Поиск</button>
 </form>
 
@@ -41,7 +40,7 @@
     @endforeach
     </tbody>
 </table>
-<form method="GET" action="{{ route('table.paginate') }}" class="row mb-3 align-items-center">
+<form method="GET" action="{{ route('table.store') }}" class="row mb-3 align-items-center">
     <div class="col-auto">
         <label for="perPage" class="form-label mb-0 me-2">Показать</label>
     </div>

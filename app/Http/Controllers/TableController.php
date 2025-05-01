@@ -20,9 +20,8 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $perPage = $request->input('perPage', 10);
-        $dateFrom = $request->input('date_from');
-        $dateTo = $request->input('date_to');
-        $dates = $this->tableService->gatDataFromRecords($dateFrom, $dateTo, $perPage);
-        return view('table', compact('dates',  'perPage',  'dateFrom', 'dateTo'));
+        $dates = $this->tableService->gatDataFromRecords($request->input('date_from'),
+        $request->input('date_to'), $perPage)->appends($request->all());
+        return view('table', compact('dates',  'perPage'));
     }
 }
